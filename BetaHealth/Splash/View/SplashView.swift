@@ -8,25 +8,28 @@ import SwiftUI
 
 struct SplashView: View {
     
-    @State var state: SplashUIState = .loading
+    @ObservedObject var viewModel: SplashViewModel
     
     var body: some View {
-        switch state {
-        case .loading:
-            LoadingView()
-
-        case .goToSignInScreen:
-            Text("Tela de Login")
-        case .goToHomeScreen:
-            Text("Tela Principal")
-        case .error(let msg):
-            Text("ERRO \(msg)")
-        }
+        Group {
+            switch viewModel.uiState {
+            case .loading:
+                LoadingView()
+            case .goToSignInScreen:
+                viewModel.signinview()
+            case .goToHomeScreen:
+                Text("Tela Principal")
+            case .error(let msg):
+                LoadingView(error: msg)
+            }
+        }.onAppear(perform: {
+            viewModel.onAppear()
+        })
 
     }
 }
 extension SplashView {  // tela de loadin com o passaro
-    func LoadingView() -> some View {  //gradiente e tela de fundo, tudo
+    func LoadingView(error: String? = nil) -> some View {  //gradiente e tela de fundo, tudo
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.loading, .blue.opacity(0.3)]),
                                startPoint: .bottom,
@@ -35,12 +38,28 @@ extension SplashView {  // tela de loadin com o passaro
             Image("Logo01")
                 .resizable()
                 .scaledToFit()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(width: 200, height: 200)
+                
+            
+            if let error = error {
+                Text("")
+                .alert(isPresented: .constant(true )){
+                    Alert(title: Text("BetaHealth"), message: Text(error), dismissButton: .default(Text("OK")))
+                    
+                    //se der erro aparece um alerta
+                    //colocar algo para se der o alerta
+                }
+
+            }
+            
+
+            
         }
     }
 }
 
 
 #Preview {
-    SplashView()
+    let viewModel = SplashViewModel()
+    SplashView(viewModel: viewModel)
 }
