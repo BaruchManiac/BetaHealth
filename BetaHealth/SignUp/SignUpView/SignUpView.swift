@@ -9,41 +9,44 @@ import SwiftUI
 struct SignUpView: View {
     @ObservedObject var viewModel: SignUpViewModel
     var body: some View {
-        ZStack{
-            LinearGradient(gradient: Gradient(colors: [.loading, .purple.opacity(0.4)]),
-                           startPoint: .bottom,
-                           endPoint: .topLeading)
-            .edgesIgnoringSafeArea(.all)
+        if case SignUpUIState.goToSignInScreen = viewModel.uiState{
+            viewModel.signinView()
+        }else{
             
-            VStack(alignment: .center){
+            ZStack{
+                LinearGradient(gradient: Gradient(colors: [.loading, .purple.opacity(0.4)]),
+                               startPoint: .bottom,
+                               endPoint: .topLeading)
+                .edgesIgnoringSafeArea(.all)
                 
-                
-                registerSignUp
-                nickSignUp
-                emailSignUp
-                passwordSignUp
-                confirmPassswordSignUp
-                bottomSignUp
-                
-                HStack{
-                    Text("Já tem uma conta?")
-                        .font(.system(size: 18, weight: .light, design: .rounded))
-                        .foregroundColor(.black)
+                ScrollView(showsIndicators: false){
                     
-                    Button(action: {
-                        print("Clique1")
-                    }) {
-                        Text("Clique aqui para fazer login.")
-                            .font(.system(size: 18, weight: .light, design: .rounded))
-                            .foregroundColor(.white)
-                            .bold()
+                    VStack(alignment: .center){
+                        
+                        
+                        registerSignUp
+                        nickSignUp
+                        emailSignUp
+                        passwordSignUp
+                        confirmPassswordSignUp
+                        bottomSignUp
+                        signInLink
+                        
                     }
-                    
+                }.navigationTitle(Text("Sign Up"))
+                    .navigationBarHidden(true)
+                if case SignUpUIState.error(let value) = viewModel.uiState {
+                    Text("")
+                        .alert(isPresented: .constant(true )){
+                            Alert(title: Text("BetaHealth"), message: Text(value), dismissButton: .default(Text("OK")))
+                        }
                 }
             }
         }
     }
+    
 }
+
 extension SignUpView {
     var registerSignUp: some View {
         Text("Registre-se")
@@ -55,14 +58,15 @@ extension SignUpView {
                     endPoint: .trailing
                 )
             )
+            .padding(.top, 100)
             .bold(true)
             .padding(.bottom, 100)
             .shadow(
                 color: Color.primary.opacity(0.9),
-                    radius: 1,
-                    x: 0,
-                    y: 2
-                )
+                radius: 1,
+                x: 0,
+                y: 2
+            )
         
     }
 }
@@ -161,12 +165,32 @@ extension SignUpView {
                     .background(Color.blue)
                     .overlay(RoundedRectangle(cornerRadius: 28)
                         .strokeBorder(Color.black.opacity(0.3),
-                                  style: StrokeStyle(lineWidth: 1)))
+                                      style: StrokeStyle(lineWidth: 1)))
                     .cornerRadius(28)
                     .padding(.horizontal, 30)
                     .padding(.bottom, 20)
-                    
+                
             }
+        }
+    }
+}
+
+extension SignUpView {
+    var signInLink: some View {
+        HStack{
+            Text("Já tem uma conta?")
+                .font(.system(size: 18, weight: .light, design: .rounded))
+                .foregroundColor(.black)
+            
+            Button(action: {
+                viewModel.signinreturn()
+            }) {
+                Text("Clique Aqui.")
+                    .font(.system(size: 18, weight: .light, design: .rounded))
+                    .foregroundColor(.white)
+                    .bold()
+            }
+            
         }
     }
 }

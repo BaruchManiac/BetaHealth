@@ -72,19 +72,20 @@ extension RpassView {
 }
 extension RpassView {
     var emailpass : some View {
-        VStack {
-            TextField("Email", text: $viewModel.email)
-                .autocapitalization(.none)
-                .autocorrectionDisabled(true)
-                .padding()
-                .frame(width: 350, height: 50)
-                .background(Color.white)
-                .cornerRadius(28)
-                .overlay(RoundedRectangle(cornerRadius: 28)
-                    .strokeBorder(Color.black,
-                                  style: StrokeStyle(lineWidth: 1)))
-                .padding(.horizontal)
-                .padding(.bottom, 40)
+            VStack {
+                TextField("Email", text: $viewModel.email)
+                    .autocapitalization(.none)
+                    .autocorrectionDisabled(true)
+                    .padding()
+                    .frame(width: 350, height: 50)
+                    .background(Color.white)
+                    .cornerRadius(28)
+                    .overlay(RoundedRectangle(cornerRadius: 28)
+                        .strokeBorder(Color.black,
+                                      style: StrokeStyle(lineWidth: 1)))
+                    .padding(.horizontal)
+                    .padding(.bottom, 40)
+            
         }
     }
 }

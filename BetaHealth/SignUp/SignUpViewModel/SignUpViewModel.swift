@@ -16,7 +16,16 @@ class SignUpViewModel: ObservableObject {
     func signUp() {
            print("email: \(email)", "password : \(password)", "nick: \(nick)", "confirmPassword: \(confirmPassword)")
        }
+    @Published var uiState: SignUpUIState = .none
+    func signinreturn(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.uiState = .goToSignInScreen
+        }
+    }
 }
-
-
+extension SignUpViewModel {
+    func signinView() -> some View {
+        return SignUpViewModelRouter.makeSignInView()
+    }
+}
 

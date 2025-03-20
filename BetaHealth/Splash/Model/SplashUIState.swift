@@ -4,7 +4,7 @@
 //
 //  Created by Baruch on 17/03/25.
 //
-import SwiftUI
+import Foundation
 
 enum SplashUIState: Codable {
     case loading

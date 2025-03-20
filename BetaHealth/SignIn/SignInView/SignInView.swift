@@ -9,47 +9,66 @@ import SwiftUI
 struct SignInView: View {
     @StateObject var viewModel = SignInViewModel()
     var body: some View {
-        NavigationStack{
-            ZStack{
-                LinearGradient(gradient: Gradient(colors: [.loading, .blue.opacity(0.3)]),
-                               startPoint: .bottom,
-                               endPoint: .topLeading)
-                .edgesIgnoringSafeArea(.all)
-                ScrollView(showsIndicators: false){
-                    
-                    VStack(alignment: .center){
+        ZStack{
+            if case SignInUIState.goToHomeScreen = viewModel.uiState{
+                viewModel.homeView()
+                
+            }else{
+                NavigationStack{
+                    ZStack{
+                        LinearGradient(gradient: Gradient(colors: [.loading, .blue.opacity(0.3)]),
+                                       startPoint: .bottom,
+                                       endPoint: .topLeading)
+                        .edgesIgnoringSafeArea(.all)
                         
-                        Text("Beta Health")
-                            .font(Font.system(.title, weight: .bold))
-                            .fontDesign(.serif)
-                            .foregroundColor(.blue)
+                        ScrollView(showsIndicators: false){
+                            
+                            VStack(alignment: .center){
+                                
+                                Text("Beta Health")
+                                    .font(Font.system(.title, weight: .bold))
+                                    .fontDesign(.serif)
+                                    .foregroundColor(.blue)
+                                
+                                Image("Logo01")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .scaledToFit()
+                                    .padding()
+                                    .frame(width: 250, height: 250)
+                                    .shadow(radius: 6)
+                                    .padding(.bottom, 20)
+                                
+                                emailField
+                                
+                                passwordField
+                                
+                                signInButton
+                                
+                                forgotPassword
+                                
+                                signUpMessage
+                                    .padding(.bottom,120)
+                                
+                                copyright
+                                
+                                
+                            }
+                        }.navigationBarTitle("Login", displayMode: .inline)
+                            .navigationBarHidden(true)
                         
-                        Image("Logo01")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .scaledToFit()
-                            .padding()
-                            .frame(width: 250, height: 250)
-                            .shadow(radius: 6)
-                            .padding(.bottom, 20)
                         
-                        emailField
-                        
-                        passwordField
-                        
-                        signInButton
-                        
-                        forgotPassword
-                        
-                        signUpMessage
-                            .padding(.bottom,120)
-                        
-                        copyright
-                        
-                        
+                        if case SignInUIState.error(let value) = viewModel.uiState {
+                            Text("")
+                                .alert(isPresented: .constant(true )){
+                                    Alert(title: Text("BetaHealth"), message: Text(value), dismissButton: .default(Text("OK")))
+                                }
+                        }
                     }
-                }.navigationBarTitle("Login", displayMode: .inline)
+                }
+                
             }
+            
         }
     }
 }
@@ -90,11 +109,10 @@ extension SignInView {
 
 extension SignInView {
     var signInButton: some View {
-        Button(action: {
-            print("Signing in...")
-        }) {
-            Text("Entrar")
-                .bold()
+        Button("Entrar") {
+            viewModel.login(email: "email", password: "password")
+                
+            }   .bold()
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -109,7 +127,6 @@ extension SignInView {
                 .padding(.bottom)
                 .padding(.top, 20)
                 .padding(.bottom, 10)
-        }
     }
 }
 
