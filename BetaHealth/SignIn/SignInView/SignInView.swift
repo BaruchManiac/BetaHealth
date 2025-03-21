@@ -75,7 +75,7 @@ struct SignInView: View {
 
 extension SignInView {
     var emailField: some View {
-        TextField("Login / Email", text: $viewModel.email)
+        TextField("🥷 | 📧   Nick / Email", text: $viewModel.email)
             .autocapitalization(.none)
             .disableAutocorrection(true)
             .padding()
@@ -92,7 +92,7 @@ extension SignInView {
 
 extension SignInView {
     var passwordField: some View {
-        SecureField(("Senha"), text: $viewModel.password)
+        SecureField(("🔐 Senha"), text: $viewModel.password)
             .autocapitalization(.none)
             .disableAutocorrection(true)
             .padding()

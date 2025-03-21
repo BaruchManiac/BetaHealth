@@ -12,9 +12,10 @@ class SignUpViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
+    @Published var gender : String = Gender.male.rawValue
     
     func signUp() {
-           print("email: \(email)", "password : \(password)", "nick: \(nick)", "confirmPassword: \(confirmPassword)")
+           print("email: \(email)", "password : \(password)", "nick: \(nick)", "confirmPassword: \(confirmPassword)", "gender: \(gender)")
        }
     @Published var uiState: SignUpUIState = .none
     func signinreturn(){

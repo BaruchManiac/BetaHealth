@@ -8,6 +8,7 @@ import SwiftUI
 
 struct SignUpView: View {
     @ObservedObject var viewModel: SignUpViewModel
+    @State private var gender : String = "Masculino"
     var body: some View {
         if case SignUpUIState.goToSignInScreen = viewModel.uiState{
             viewModel.signinView()
@@ -29,12 +30,12 @@ struct SignUpView: View {
                         emailSignUp
                         passwordSignUp
                         confirmPassswordSignUp
+                        genderField
                         bottomSignUp
                         signInLink
                         
                     }
                 }.navigationTitle(Text("Sign Up"))
-                    .navigationBarHidden(true)
                 if case SignUpUIState.error(let value) = viewModel.uiState {
                     Text("")
                         .alert(isPresented: .constant(true )){
@@ -58,9 +59,9 @@ extension SignUpView {
                     endPoint: .trailing
                 )
             )
-            .padding(.top, 100)
+            .padding(.top, 20)
             .bold(true)
-            .padding(.bottom, 100)
+            .padding(.bottom, 120)
             .shadow(
                 color: Color.primary.opacity(0.9),
                 radius: 1,
@@ -74,7 +75,7 @@ extension SignUpView {
 extension SignUpView {
     var nickSignUp: some View {
         VStack {
-            TextField("Nickname", text: $viewModel.nick)
+            TextField("🥷 Nickname", text: $viewModel.nick)
                 .autocapitalization(.none)
                 .autocorrectionDisabled(true)
                 .padding()
@@ -93,7 +94,7 @@ extension SignUpView {
 extension SignUpView {
     var emailSignUp: some View {
         VStack {
-            TextField("Email", text: $viewModel.email)
+            TextField("📧 Email", text: $viewModel.email)
                 .autocapitalization(.none)
                 .autocorrectionDisabled(true)
                 .padding()
@@ -112,7 +113,7 @@ extension SignUpView {
 extension SignUpView {
     var passwordSignUp: some View {
         VStack {
-            SecureField("Password", text: $viewModel.password)
+            SecureField("🔐 Password", text: $viewModel.password)
                 .autocapitalization(.none)
                 .autocorrectionDisabled(true)
                 .padding()
@@ -131,7 +132,7 @@ extension SignUpView {
 extension SignUpView {
     var confirmPassswordSignUp: some View {
         VStack {
-            SecureField("Confirm the Password", text: $viewModel.confirmPassword)
+            SecureField("🔐 Confirm the Password", text: $viewModel.confirmPassword)
                 .autocapitalization(.none)
                 .autocorrectionDisabled(true)
                 .padding()
@@ -142,7 +143,7 @@ extension SignUpView {
                     .strokeBorder(Color.black,
                                   style: StrokeStyle(lineWidth: 1)))
                 .padding(.horizontal)
-                .padding(.bottom, 20)
+                .padding(.bottom, 10)
         }
     }
 }
@@ -194,7 +195,25 @@ extension SignUpView {
         }
     }
 }
+extension SignUpView {
+    var genderField: some View {
+        VStack{
+            Text("Informe o seu Sexo:")
+                .font(.system(size: 20, weight: .light, design: .rounded))
+                .bold(true)
+                .foregroundColor(.black)
 
+            Picker("Gender", selection: $gender) {
+                ForEach(Gender.allCases, id: \.self) {
+                    value in
+                    Text(value.rawValue)
+                        .tag(value)
+                }
+            }.pickerStyle(InlinePickerStyle())
+                .frame(width: 300, height: 110)
+        }
+   }
+}
 
 #Preview {
     SignUpView(viewModel: SignUpViewModel())

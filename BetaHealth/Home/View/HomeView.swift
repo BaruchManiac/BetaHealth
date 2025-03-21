@@ -10,8 +10,24 @@ struct HomeView: View {
     @ObservedObject var viewModel: HomeViewModel
     
     var body: some View {
-        Text("Hello, World!")
+        ZStack{
+            LinearGradient(colors: [.orange, .blue], startPoint: .bottomLeading, endPoint: .topLeading)
+                .edgesIgnoringSafeArea(.all)
+            VStack{
+                TextField("Modelo de negocio", text: .constant(true ? " " : ""))
+                    .padding()
+                    .padding()
+                    .overlay(RoundedRectangle(cornerRadius: 28).stroke(style: StrokeStyle(lineWidth: 1)))
+                    .background(Color.white)
+                    .cornerRadius(28)
+                
+                       
+                
+                       
+            }
+        }
     }
+    
 }
 
 #Preview {
