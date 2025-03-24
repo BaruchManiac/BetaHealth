@@ -10,7 +10,7 @@ struct SignInView: View {
     @StateObject var viewModel = SignInViewModel()
     var body: some View {
         ZStack{
-            if case SignInUIState.goToHomeScreen = viewModel.uiState{
+            if case SignInUIState.sucess = viewModel.uiState{
                 viewModel.homeView()
                 
             }else{

@@ -8,11 +8,15 @@ import SwiftUI
 
 struct SignUpView: View {
     @ObservedObject var viewModel: SignUpViewModel
+    
     @State private var gender : String = "Masculino"
     var body: some View {
         if case SignUpUIState.goToSignInScreen = viewModel.uiState{
             viewModel.signinView()
+        }else if case SignUpUIState.sucess = viewModel.uiState{
+            viewModel.homeView()
         }else{
+            
             
             ZStack{
                 LinearGradient(gradient: Gradient(colors: [.loading, .purple.opacity(0.4)]),
@@ -45,7 +49,6 @@ struct SignUpView: View {
             }
         }
     }
-    
 }
 
 extension SignUpView {
@@ -61,7 +64,7 @@ extension SignUpView {
             )
             .padding(.top, 20)
             .bold(true)
-            .padding(.bottom, 120)
+            .padding(.bottom, 100)
             .shadow(
                 color: Color.primary.opacity(0.9),
                 radius: 1,
@@ -105,7 +108,7 @@ extension SignUpView {
                     .strokeBorder(Color.black,
                                   style: StrokeStyle(lineWidth: 1)))
                 .padding(.horizontal)
-                .padding(.bottom, 12)
+                .padding(.bottom, 10)
         }
     }
 }
@@ -124,7 +127,7 @@ extension SignUpView {
                     .strokeBorder(Color.black,
                                   style: StrokeStyle(lineWidth: 1)))
                 .padding(.horizontal)
-                .padding(.bottom, 12)
+                .padding(.bottom, 10)
         }
     }
 }
@@ -155,7 +158,7 @@ extension SignUpView {
     var bottomSignUp: some View {
         VStack {
             Button(action: {
-                viewModel.signUp()
+                viewModel.homereturn()
             }) {
                 Text("Sign Up")
                     .padding()

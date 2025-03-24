@@ -10,6 +10,7 @@ enum SignUpUIState {
     case none
     case loading
     case goToSignInScreen
+    case sucess
     case error(String)
 }
 

@@ -9,6 +9,6 @@ import Foundation
 enum SignInUIState {
     case none
     case loading
-    case goToHomeScreen
+    case sucess
     case error(String)
 }
