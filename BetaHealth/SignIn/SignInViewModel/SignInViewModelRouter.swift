@@ -8,10 +8,8 @@ import SwiftUI
 import Combine
 
 enum SignInViewModelRouter {
-   static func makeHomeView(publisher: PassthroughSubject<Bool, Never>) -> some View {
-       let viewModel = HomeViewModel()
-       //viewModel.publisher = publisher
+    static func makeHomeView() -> some View {
+        let viewModel = HomeViewModel()
         return HomeView(viewModel: viewModel)
     }
 }
-

@@ -10,11 +10,13 @@ struct SignUpView: View {
     @ObservedObject var viewModel: SignUpViewModel
     
     @State private var gender : String = "Masculino"
+    @State private var goToSignIn = false
+    @State private var sucess = false
+    
+    
     var body: some View {
         if case SignUpUIState.goToSignInScreen = viewModel.uiState{
             viewModel.signinView()
-        }else if case SignUpUIState.sucess = viewModel.uiState{
-            viewModel.homeView()
         }else{
             
             
@@ -24,6 +26,7 @@ struct SignUpView: View {
                                endPoint: .topLeading)
                 .edgesIgnoringSafeArea(.all)
                 
+
                 ScrollView(showsIndicators: false){
                     
                     VStack(alignment: .center){
@@ -40,6 +43,7 @@ struct SignUpView: View {
                         
                     }
                 }.navigationTitle(Text("Sign Up"))
+                
                 if case SignUpUIState.error(let value) = viewModel.uiState {
                     Text("")
                         .alert(isPresented: .constant(true )){
@@ -158,7 +162,7 @@ extension SignUpView {
     var bottomSignUp: some View {
         VStack {
             Button(action: {
-                viewModel.homereturn()
+                viewModel.signinreturn()
             }) {
                 Text("Sign Up")
                     .padding()

@@ -9,23 +9,6 @@ import Combine
 
 class SignInViewModel : ObservableObject {
     
-    private var cancellable: AnyCancellable?
-    
-    private let publisher = PassthroughSubject<Bool, Never>()
-    
-    init(){
-        cancellable = publisher.sink { value in
-            print(value)
-            if value {
-                self.uiState = .sucess
-            }
-            
-        }
-    }
-    deinit {
-        cancellable?.cancel()
-    }
-    
     var email: String = ""
     var password: String = ""
     
@@ -46,6 +29,6 @@ class SignInViewModel : ObservableObject {
 
 extension SignInViewModel {
     func homeView() -> some View {
-        return SignInViewModelRouter.makeHomeView(publisher: publisher)
+        return SignInViewModelRouter.makeHomeView()
     }
 }

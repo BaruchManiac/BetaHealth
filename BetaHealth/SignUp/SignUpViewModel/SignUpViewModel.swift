@@ -19,17 +19,12 @@ class SignUpViewModel: ObservableObject{
     func signUp() {
         print("email: \(email)", "password : \(password)", "nick: \(nick)", "confirmPassword: \(confirmPassword)", "gender: \(gender)")
     }
+    
+    
     @Published var uiState: SignUpUIState = .none
     func signinreturn(){
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.uiState = .goToSignInScreen
-        }
-    }
-    var publisher: PassthroughSubject<Bool, Never>!
-    func homereturn(){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.uiState = .sucess
-            self.publisher.send(true)
         }
     }
 }
@@ -38,9 +33,4 @@ extension SignUpViewModel {
         return SignUpViewModelRouter.makeSignInView()
     }
 }
-extension SignUpViewModel{
-    func homeView() -> some View {
-        return SignUpViewModelRouter2.makeHomeView()
-    }
-    
-}
+
